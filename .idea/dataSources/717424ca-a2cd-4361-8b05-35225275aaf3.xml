@@ -923,7 +923,6 @@
     </table>
     <table id="233" parent="6" name="test_fetch">
       <Engine>InnoDB</Engine>
-      <Collation>latin1_swedish_ci</Collation>
     </table>
     <column id="234" parent="230" name="ID">
       <Position>1</Position>

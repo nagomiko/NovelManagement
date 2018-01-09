@@ -1,5 +1,6 @@
 package novel_geter_reader;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -60,8 +61,9 @@ public class getTitle_novel_inDB {
         Elements wikiUrl = doc.select("dd a");//url_get
         Elements title = doc.select("p.novel_title");//title_get
 
-        insertDB(target_id, no, target_url, title.text(), page_date, is_read);
+        insertEpisode(target_id, no, target_url, title.text(), page_date, is_read);
 //        DBに書き込み
+        insertFetch(target_id,target_url,title.text());
 
         for (Element element : wikiUrl) {
             getSub(element.attr("href"));
@@ -90,7 +92,7 @@ public class getTitle_novel_inDB {
         text = text.replaceAll("<br>", "");
         text = text.replaceAll("</div>", "").replaceAll("<div>", "").replaceAll("<div id=\"novel_honbun\" class=\"novel_view\">", "");
 
-        insertDB(target_id, no, target_suburl, subtitle.text(), text, is_read);
+        insertEpisode(target_id, no, target_suburl, subtitle.text(), text, is_read);
 
 
         //
@@ -101,7 +103,7 @@ public class getTitle_novel_inDB {
 
     }
 
-    private static void insertDB(int ID, int no, String url, String title, String page_date, int is_read) {
+    private static void insertEpisode(int ID, int no, String url, String title, String page_date, int is_read) {
 
         String sql = "INSERT INTO test_episode(target_ID, no, url, title, page_date, is_read)  VALUES (?,?,?,?,?,?)";
 
@@ -122,6 +124,22 @@ public class getTitle_novel_inDB {
         }
 //        ps.setString(1,"SAO");
         //ResultSet rs=ps.executeQuery();
+    }
+
+    private static void insertFetch(int ID,String url,String title){
+
+        String sql="INSERT INTO test_fetch(target_ID,url,title) VALUES (?,?,?)";
+
+        try {
+            PreparedStatement ps =con.prepareStatement(sql);
+            ps.setInt(1, ID);
+            ps.setString(2,url);
+            ps.setString(3,title);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 }
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package novel_geter_reader;
+package novel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author C0116289
  */
 
-@WebServlet(urlPatterns = {"/novel_geter_reader/record_all_open"})
-public class record_all_open extends HttpServlet {
+@WebServlet(urlPatterns = {"/novel/OutputFetchTargetRecord"})
+public class OutputFetchTargetRecord extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,7 +60,7 @@ public class record_all_open extends HttpServlet {
             stmt = con.createStatement();
 
             //SQL文の発行
-            String sql = "SELECT * FROM test_fetch";
+            String sql = "SELECT * FROM test_episode";
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
