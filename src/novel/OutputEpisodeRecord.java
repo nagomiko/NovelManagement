@@ -46,10 +46,10 @@ public class OutputEpisodeRecord extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Kadai10_2</title>");
+            out.println("<title>OutputEpisodeRecord</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h3>Servlet Kadai10_2 at " + request.getContextPath() + "</h3>");
+            out.println("<h3>Servlet OutputEpisodeRecord at " + request.getContextPath() + "</h3>");
 
             //Class.forNameの記述
             Class.forName("com.mysql.jdbc.Driver");
@@ -67,10 +67,13 @@ public class OutputEpisodeRecord extends HttpServlet {
 
             //データベースから値を取得して出力
             while (rs.next()) {
-                out.println("TWEETNO=" + rs.getInt("TWEETNO") + "<br>");
-                out.println("TWITTERID=" + rs.getString("TWITTERID") + "<br>");
-                out.println("TWEETTEXT=" + rs.getString("TWEETTEXT") + "<br>");
-                out.println("IINE=" + rs.getInt("IINE") + "<br>");
+                out.println("ID=" + rs.getInt("ID") + "<br>");
+                out.println("TargetID=" + rs.getInt("target_ID") + "<br>");
+                out.println("No=" + rs.getInt("no") + "<br>");
+                out.println("URL=" + rs.getString("url") + "<br>");
+                out.println("Title=" + rs.getString("title") + "<br>");
+                out.println("PageData=" + rs.getString("page_data") + "<br>");
+                out.println("IsRead=" + rs.getInt("is_read") + "<br>");
                 out.println("<hr><br>");
 
             }

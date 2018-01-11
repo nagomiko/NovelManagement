@@ -1020,7 +1020,7 @@
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="252" parent="232" name="page_date">
+    <column id="252" parent="232" name="page_data">
       <Position>6</Position>
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
@@ -1042,22 +1042,17 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="233" name="target_ID">
+    <column id="256" parent="233" name="url">
       <Position>2</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="257" parent="233" name="url">
+    <column id="257" parent="233" name="title">
       <Position>3</Position>
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="233" name="title">
-      <Position>4</Position>
-      <DataType>text|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="259" parent="233" name="PRIMARY">
+    <key id="258" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>

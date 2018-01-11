@@ -14,7 +14,10 @@
 <h1>admin_page.jsp</h1>
 管理者用ページ
 <div>
-    <a href="top_page.html">ホームに戻る</a>
+    <div><a href="/novel/OutputEpisodeRecord">EpisodeDBのレコードをすべて出力</a></div>
+    <div><a href="/novel/OutputFetchTargetRecord">FetchDBのレコードをすべて出力</a></div>
+
+    <div><a href="top_page.html">ホームに戻る</a></div>
 </div>
 
 </body>

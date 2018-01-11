@@ -54,14 +54,14 @@ public class getTitle_novel_inDB {
         String target_ncode = "n9669bk";
         String target_url = general_url + "/" + target_ncode + "/";//home
         int count = 0;
-        String page_date = "hogehoge";
+        String page_data = "メインページ";
 
         Document doc = Jsoup.connect(target_url).get();
 
         Elements wikiUrl = doc.select("dd a");//url_get
         Elements title = doc.select("p.novel_title");//title_get
 
-        insertEpisode(target_id, no, target_url, title.text(), page_date, is_read);
+        insertEpisode(target_id, no, target_url, title.text(), page_data, is_read);
 //        DBに書き込み
         insertFetch(target_id,target_url,title.text());
 
@@ -88,9 +88,7 @@ public class getTitle_novel_inDB {
 
         Elements newsHeadlines = doc.select("div.novel_view");
 
-        text = newsHeadlines.toString().replaceAll("　", "");
-        text = text.replaceAll("<br>", "");
-        text = text.replaceAll("</div>", "").replaceAll("<div>", "").replaceAll("<div id=\"novel_honbun\" class=\"novel_view\">", "");
+        text = newsHeadlines.toString().replaceAll("　", "").replaceAll("<br>", "").replaceAll("</div>", "").replaceAll("<div>", "").replaceAll("<div id=\"novel_honbun\" class=\"novel_view\">", "");
 
         insertEpisode(target_id, no, target_suburl, subtitle.text(), text, is_read);
 
@@ -103,9 +101,9 @@ public class getTitle_novel_inDB {
 
     }
 
-    private static void insertEpisode(int ID, int no, String url, String title, String page_date, int is_read) {
+    private static void insertEpisode(int ID, int no, String url, String title, String page_data, int is_read) {
 
-        String sql = "INSERT INTO test_episode(target_ID, no, url, title, page_date, is_read)  VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO test_episode(target_ID, no, url, title, page_data, is_read)  VALUES (?,?,?,?,?,?)";
 
         //PreparedStatementの作成
         try {
@@ -114,7 +112,7 @@ public class getTitle_novel_inDB {
             ps.setInt(2, no);
             ps.setString(3, url);
             ps.setString(4, title);
-            ps.setString(5, page_date);
+            ps.setString(5, page_data);
             ps.setInt(6, is_read);
             ps.executeUpdate();
 
