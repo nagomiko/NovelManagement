@@ -15,7 +15,8 @@
 ユーザページ
 
 <div>
-    <a href="">データベースに追加</a>
+    <a href="/novel/OutputTitle">閲覧</a><br>
+    <a href="/novel/AddEpisodeRecord">データベースに追加</a><br>
     <a href="top_page.html">ホームに戻る</a>
 </div>
 </body>

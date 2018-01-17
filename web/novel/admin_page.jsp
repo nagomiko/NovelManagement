@@ -16,7 +16,8 @@
 <div>
     <div><a href="/novel/OutputEpisodeRecord">EpisodeDBのレコードをすべて出力</a></div>
     <div><a href="/novel/OutputFetchTargetRecord">FetchDBのレコードをすべて出力</a></div>
-
+    <div><a href="SearchNovel.jsp">検索画面へ</a></div>
+    <div><a href="AdvancedSearchRecord.jsp">ちょっと詳しい検索画面へ</a></div>
     <div><a href="top_page.html">ホームに戻る</a></div>
 </div>
 

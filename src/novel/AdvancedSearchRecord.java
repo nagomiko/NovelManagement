@@ -5,6 +5,7 @@
  */
 package novel;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -21,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author C0116289
  */
 
-@WebServlet(urlPatterns = {"/novel/OutputEpisodeRecord"})
-public class OutputEpisodeRecord extends HttpServlet {
+@WebServlet(urlPatterns = {"/novel/AdvancedSearchRecord"})
+public class AdvancedSearchRecord extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,11 +43,12 @@ public class OutputEpisodeRecord extends HttpServlet {
         Connection con = null;
         Statement stmt = null;
         PreparedStatement ps = null;
+        String sql;
+        ResultSet rs = null;
 
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
             //Class.forNameの記述
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -55,19 +57,26 @@ public class OutputEpisodeRecord extends HttpServlet {
             con = DriverManager.getConnection(driverUrl, "root", "root");
             stmt = con.createStatement();
 
-            if (request.getParameter("ID") != null) {
-                String ID = request.getParameter("ID");
-                String sql = "DELETE FROM test_episode WHERE ID=?";
-                ps = con.prepareStatement(sql);
-                ps.setInt(1, Integer.parseInt(ID));
-                ps.executeUpdate();
-                request.setAttribute("ID", ID);
-            }
+            int btn = Integer.parseInt(request.getParameter("btn"));
 
-            //SQL文の発行
-            String sql = "SELECT * FROM test_episode";
-            ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            switch (btn) {
+                case 1:
+                    String title = request.getParameter("title");
+                    int No = Integer.parseInt(request.getParameter("No"));
+                    sql = "SELECT test_episode.ID,test_episode.target_ID,test_episode.no,test_episode.url,test_episode.title,test_episode.page_data,test_episode.is_read FROM test_fetch INNER JOIN test_episode ON test_fetch.ID = target_ID WHERE test_fetch.title LIKE ? AND no=?";
+                    ps = con.prepareStatement(sql);
+                    ps.setString(1, "%"+title+"%");
+                    ps.setInt(2, No);
+                    rs = ps.executeQuery();
+                    break;
+                case 2:
+                    String ncode = request.getParameter("ncode");
+                    sql = "SELECT * FROM test_episode WHERE url like ?";
+                    ps = con.prepareStatement(sql);
+                    ps.setString(1, "%"+ncode+"%");
+                    rs = ps.executeQuery();
+                    break;
+            }
 
 
             List<NovelData> novelDataList = new ArrayList<>();
@@ -86,15 +95,12 @@ public class OutputEpisodeRecord extends HttpServlet {
                 novelDataList.add(novel);
             }
 
-
-
-
             request.setAttribute("novelDataList", novelDataList);
             RequestDispatcher dispatcher = request.getRequestDispatcher("OutputEpisodeRecord.jsp");
             dispatcher.forward(request, response);
-
             //ResultSetのclose
             rs.close();
+
 
         } catch (Exception e) {
             //サーブレット内での例外をアプリケーションのエラーとして表示

@@ -11,6 +11,17 @@
     <title>SearchNovel</title>
 </head>
 <body>
-
+<div>
+    <h3>主キーによる検索</h3>
+    <form action="SearchNovel" method="post">
+        <div>
+            検索するDBを選択してください<br>
+            <input type="radio" name="selectDB" value="1" checked>test_fetch
+            <input type="radio" name="selectDB" value="2">test_episode
+        </div>
+        <div>ID:<input type="number" name="ID">(数字を入力して下さい)</div>
+        <div><input type="submit" value="送信"></div>
+    </form>
+</div>
 </body>
 </html>

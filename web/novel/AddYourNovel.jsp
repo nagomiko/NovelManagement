@@ -11,6 +11,17 @@
     <title>AddYourNovel</title>
 </head>
 <body>
-
+<div>
+    小説追加ページです
+</div>
+<div>
+    <form action="/novel/AddEpisodeRecord" method="post">
+        <div>Title:<br><input type="text" name="title"></div>
+        <div>No:<br><input type="number" name="No">(数字を入力してください)</div>
+        <div>nCode:<br><input type="text" name="ncode"></div>
+        <div>pageData<br><textarea name="pageData" cols="30" rows="4"></textarea></div>
+        <div><input type="submit" value="送信"></div>
+    </form>
+</div>
 </body>
 </html>
