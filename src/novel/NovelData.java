@@ -9,7 +9,7 @@ public class NovelData {
     private String pageData;
     private int isRead;
 
-
+//コンストラクタ
     public NovelData(){}
 
     public NovelData(int target_ID, int no, String url, String title, String pageData, int isRead) {
@@ -21,6 +21,7 @@ public class NovelData {
         this.isRead = isRead;
     }
 
+//セッターとゲッター
     public int getID() {
         return ID;
     }

@@ -55,7 +55,8 @@ public class OutputFetchTargetRecord extends HttpServlet {
             con = DriverManager.getConnection(driverUrl, "root", "root");
             stmt = con.createStatement();
 
-
+//             削除するかの判定
+//            JSPから値受け渡し
             if (request.getParameter("ID") != null) {
                 String ID = request.getParameter("ID");
                 String sql = "DELETE FROM test_fetch WHERE ID=?";
@@ -71,7 +72,7 @@ public class OutputFetchTargetRecord extends HttpServlet {
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-
+//リスト作成
             List<NovelData> novelDataList = new ArrayList<>();
 
 
@@ -85,6 +86,7 @@ public class OutputFetchTargetRecord extends HttpServlet {
             }
 
             request.setAttribute("novelDataList", novelDataList);
+//            フォワード
             RequestDispatcher dispatcher = request.getRequestDispatcher("OutputFetchTargetRecord.jsp");
             dispatcher.forward(request, response);
 

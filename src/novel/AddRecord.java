@@ -27,10 +27,10 @@ public class AddRecord extends HttpServlet {
         int No = Integer.parseInt(request.getParameter("No"));
         String URL = "YourNovelData/" + ncode;
 
-        // 登録するユーザーの情報を設定
+        // 登録するデータの情報を設定
         NovelData entryData = new NovelData(4, No, URL, title, pagedata, 0);
 
-        // セッションスコープに登録ユーザーを保存
+        // セッションスコープに登録データを保存
         HttpSession session = request.getSession();
         session.setAttribute("entryData", entryData);
 
@@ -63,7 +63,7 @@ public class AddRecord extends HttpServlet {
             HttpSession session = request.getSession();
             NovelData entryData = (NovelData) session.getAttribute("entryData");
 
-            // 登録処理の呼び出し
+            // 登録処理
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -94,12 +94,10 @@ public class AddRecord extends HttpServlet {
                 ps.executeUpdate();
 
 
-
-
-                String sql2="INSERT INTO test_fetch(url,title) VALUES (?,?,?)";
-                java.sql.PreparedStatement ps1=con.prepareStatement(sql2);
-                ps1.setString(1,entryData.getUrl());
-                ps1.setString(2,entryData.getTitle());
+                String sql2 = "INSERT INTO test_fetch(url,title) VALUES (?,?,?)";
+                java.sql.PreparedStatement ps1 = con.prepareStatement(sql2);
+                ps1.setString(1, entryData.getUrl());
+                ps1.setString(2, entryData.getTitle());
                 ps1.executeUpdate();
 
             } catch (SQLException e) {

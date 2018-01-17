@@ -24,18 +24,23 @@ public class OutputTitle extends HttpServlet {
         String forwardPath = null;
 
         Connection con;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         Statement stmt = null;
-
+//アクションの値を取得
         String action = request.getParameter("action");
 
+//        DBと接続
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String driverURL = "jdbc:mysql://localhost:3306/novel";
             con = DriverManager.getConnection(driverURL, "root", "root");
             stmt = con.createStatement();
 
+//            アクションがNULLなら（最初）
+//            タイトルを取得
+
             if (action == null) {
+//                フォワード先を指定
                 forwardPath = "OutputTitle.jsp";
                 String sql = "select * from test_fetch";
                 ps = con.prepareStatement(sql);
@@ -54,7 +59,10 @@ public class OutputTitle extends HttpServlet {
 
                 request.setAttribute("Title", Title);
 
+//                アクションがsubなら
+//                サブタイトルの取得
             } else if (action.equals("sub")) {
+//                フォワード先を指定
                 forwardPath = "OutputSubTitle.jsp";
                 int ID = Integer.parseInt(request.getParameter("ID"));
                 String sql = "select * from test_episode where target_ID = ?";
@@ -73,14 +81,16 @@ public class OutputTitle extends HttpServlet {
                 }
 
                 request.setAttribute("SubTitle", SubTitle);
-
-            } else if (action.equals("episode")){
-                forwardPath="OutputEpisode.jsp";
-                String url=request.getParameter("url");
-                String sql="select * from test_episode where url=?";
-                ps=con.prepareStatement(sql);
-                ps.setString(1,url);
-                ResultSet rs=ps.executeQuery();
+//              アクションがepisodeなら
+//                指定したエピソードを取得
+            } else if (action.equals("episode")) {
+//                フォワード先の指定
+                forwardPath = "OutputEpisode.jsp";
+                String url = request.getParameter("url");
+                String sql = "select * from test_episode where url=?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, url);
+                ResultSet rs = ps.executeQuery();
 
                 List<NovelData> novelDataList = new ArrayList<>();
 
@@ -101,17 +111,19 @@ public class OutputTitle extends HttpServlet {
 
             }
 
-
-
             // 設定されたフォワード先にフォワード
             RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
             dispatcher.forward(request, response);
+
+            ps.close();
+            con.close();
+            stmt.close();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
         }
 
     }

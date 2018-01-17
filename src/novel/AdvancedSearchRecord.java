@@ -56,29 +56,32 @@ public class AdvancedSearchRecord extends HttpServlet {
             String driverUrl = "jdbc:mysql://localhost:3306/novel";
             con = DriverManager.getConnection(driverUrl, "root", "root");
             stmt = con.createStatement();
-
+//            リクエストパラメータの取得
             int btn = Integer.parseInt(request.getParameter("btn"));
 
+//            処理の分岐
             switch (btn) {
+
                 case 1:
                     String title = request.getParameter("title");
                     int No = Integer.parseInt(request.getParameter("No"));
                     sql = "SELECT test_episode.ID,test_episode.target_ID,test_episode.no,test_episode.url,test_episode.title,test_episode.page_data,test_episode.is_read FROM test_fetch INNER JOIN test_episode ON test_fetch.ID = target_ID WHERE test_fetch.title LIKE ? AND no=?";
                     ps = con.prepareStatement(sql);
-                    ps.setString(1, "%"+title+"%");
+                    ps.setString(1, "%" + title + "%");
                     ps.setInt(2, No);
                     rs = ps.executeQuery();
                     break;
+
                 case 2:
                     String ncode = request.getParameter("ncode");
                     sql = "SELECT * FROM test_episode WHERE url like ?";
                     ps = con.prepareStatement(sql);
-                    ps.setString(1, "%"+ncode+"%");
+                    ps.setString(1, "%" + ncode + "%");
                     rs = ps.executeQuery();
                     break;
             }
 
-
+//          リスト作成
             List<NovelData> novelDataList = new ArrayList<>();
 
             //データベースから値を取得
@@ -92,10 +95,12 @@ public class AdvancedSearchRecord extends HttpServlet {
                 novel.setPageData(rs.getString("page_data"));
                 novel.setIsRead(rs.getInt("is_read"));
 
+//              リストにアド
                 novelDataList.add(novel);
             }
-
+//          リクエストへの属性追加
             request.setAttribute("novelDataList", novelDataList);
+//            フォワード
             RequestDispatcher dispatcher = request.getRequestDispatcher("OutputEpisodeRecord.jsp");
             dispatcher.forward(request, response);
             //ResultSetのclose

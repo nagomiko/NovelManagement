@@ -55,6 +55,8 @@ public class OutputEpisodeRecord extends HttpServlet {
             con = DriverManager.getConnection(driverUrl, "root", "root");
             stmt = con.createStatement();
 
+//            削除するかの判定
+//            JSPから値受け渡し
             if (request.getParameter("ID") != null) {
                 String ID = request.getParameter("ID");
                 String sql = "DELETE FROM test_episode WHERE ID=?";
@@ -69,7 +71,7 @@ public class OutputEpisodeRecord extends HttpServlet {
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-
+//          リスト作成
             List<NovelData> novelDataList = new ArrayList<>();
 
             //データベースから値を取得
@@ -82,14 +84,13 @@ public class OutputEpisodeRecord extends HttpServlet {
                 novel.setTitle(rs.getString("title"));
                 novel.setPageData(rs.getString("page_data"));
                 novel.setIsRead(rs.getInt("is_read"));
-
+//リストにアド
                 novelDataList.add(novel);
             }
 
 
-
-
             request.setAttribute("novelDataList", novelDataList);
+//            フォワード
             RequestDispatcher dispatcher = request.getRequestDispatcher("OutputEpisodeRecord.jsp");
             dispatcher.forward(request, response);
 
