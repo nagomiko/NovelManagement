@@ -59,7 +59,7 @@ public class SearchNovel extends HttpServlet {
             String  selectDB = request.getParameter("selectDB");
 
             if (selectDB.equals("1")) {
-                String sql = "select * from test_fetch where ID=?";
+                String sql = "select * from fetch_target where id=?";
                 ps = con.prepareStatement(sql);
                 ps.setInt(1, Integer.parseInt(ID));
                 ResultSet rs = ps.executeQuery();
@@ -70,7 +70,7 @@ public class SearchNovel extends HttpServlet {
                 //データベースから値を取得
                 while (rs.next()) {
                     NovelData novel = new NovelData();
-                    novel.setID(rs.getInt("ID"));
+                    novel.setID(rs.getInt("id"));
                     novel.setUrl(rs.getString("url"));
                     novel.setTitle(rs.getString("title"));
                     novelDataList.add(novel);
@@ -83,7 +83,7 @@ public class SearchNovel extends HttpServlet {
                 rs.close();
 
             } else {
-                String sql = "select * from test_episode where ID=?";
+                String sql = "select * from episode where id=?";
                 ps = con.prepareStatement(sql);
                 ps.setInt(1, Integer.parseInt(ID));
                 ResultSet rs = ps.executeQuery();
@@ -94,8 +94,8 @@ public class SearchNovel extends HttpServlet {
                 //データベースから値を取得
                 while (rs.next()) {
                     NovelData novel = new NovelData();
-                    novel.setID(rs.getInt("ID"));
-                    novel.setTarget_ID(rs.getInt("target_ID"));
+                    novel.setID(rs.getInt("id"));
+                    novel.setTarget_ID(rs.getInt("target_id"));
                     novel.setNo(rs.getInt("no"));
                     novel.setUrl(rs.getString("url"));
                     novel.setTitle(rs.getString("title"));
